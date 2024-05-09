@@ -1,0 +1,9 @@
+services:
+  frontend:
+    build:
+      target: dev
+    container_name: frontend-dev
+    env_file:
+      - ./.dev.env
+    environment:
+      NODE_ENV: development

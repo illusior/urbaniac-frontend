@@ -1,0 +1,25 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    groups:
+      major:
+        applies-to: version-updates
+        patterns:
+          - "*"
+        update-types:
+          - "major"
+      minor:
+        applies-to: version-updates
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+      patch:
+        applies-to: version-updates
+        patterns:
+          - "*"
+        update-types:
+          - "patch"

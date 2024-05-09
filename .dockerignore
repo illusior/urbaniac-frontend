@@ -1,0 +1,22 @@
+# build
+./dist/
+
+# config
+./.configs/
+!./.configs/nginx/*
+!./.configs/tsconfig.json
+!./.configs/tsconfig.node.json
+!./.configs/vite.config.ts
+
+# docker
+./.docker/
+
+# git
+./.git/
+./.github/
+
+# npm
+./node_modules/
+
+# vscode
+./.vscode/

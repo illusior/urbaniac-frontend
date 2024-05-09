@@ -1,0 +1,36 @@
+name: build-lint
+
+on:
+  push:
+  workflow_call:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - uses: ./.github/actions/install-deps
+
+      - name: setup build cache
+        uses: actions/cache@v3
+        with:
+          path: ./dist/
+          key: ${{ runner.os }}-build-dist-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-build-dist-
+
+      - name: build
+        run: pnpm build
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - uses: ./.github/actions/install-deps
+
+      - name: lint
+        run: pnpm lint

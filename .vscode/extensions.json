@@ -1,0 +1,18 @@
+{
+    "recommendations": [
+        "dbaeumer.vscode-eslint",
+        "github.vscode-github-actions",
+        "gruntfuggly.todo-tree",
+        "mhutchie.git-graph",
+        "ms-vscode.vscode-typescript-next",
+        "ms-vsliveshare.vsliveshare",
+        "postman.postman-for-vscode",
+        "shardulm94.trailing-spaces",
+        "streetsidesoftware.code-spell-checker-russian",
+        "streetsidesoftware.code-spell-checker",
+        "stylelint.vscode-stylelint",
+        "usernamehw.errorlens",
+        "wix.vscode-import-cost",
+        "yoavbls.pretty-ts-errors"
+    ]
+}
