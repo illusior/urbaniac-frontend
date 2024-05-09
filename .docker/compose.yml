@@ -1,0 +1,13 @@
+services:
+  frontend:
+    build:
+      target: prod
+    container_name: frontend-prod
+    env_file:
+      - ./.prod.env
+    extends:
+      file: ./compose.base.yml
+      service: base
+    environment:
+      NODE_ENV: ${NODE_ENV}
+

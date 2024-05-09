@@ -1,0 +1,29 @@
+{
+  "version": "0.2",
+  "language": "en, ru",
+  "allowCompoundWords": true,
+  "ignorePaths": [
+    "**/dist",
+    "**/node_modules",
+    "**/package.json",
+    "**/pnpm-lock.yaml",
+    "**/*.svg"
+  ],
+  "dictionaryDefinitions": [
+    {
+      "name": "customWords",
+      "path": "./.configs/.cSpellWords.txt"
+    }
+  ],
+  "dictionaries": [
+    "companies",
+    "css",
+    "customWords",
+    "html",
+    "misc",
+    "node",
+    "npm",
+    "softwareTerms",
+    "typescript"
+  ]
+}

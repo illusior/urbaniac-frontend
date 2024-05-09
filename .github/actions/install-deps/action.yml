@@ -1,0 +1,33 @@
+name: install dependencies
+
+runs:
+  using: "composite"
+  steps:
+    - name: install Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 22.1.0
+
+    - name: install pnpm
+      uses: pnpm/action-setup@v2
+      with:
+        version: 9.1.0
+        run_install: false
+
+    - name: get pnpm store directory
+      shell: bash
+      run: |
+        echo "PNPM_STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+    - name: setup pnpm cache
+      uses: actions/cache@v3
+      with:
+        path: ${{ env.PNPM_STORE_PATH }}
+        key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+        restore-keys: |
+          ${{ runner.os }}-pnpm-store-
+
+    - name: pnpm i
+      shell: bash
+      run: |
+        pnpm i
