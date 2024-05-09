@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "plugins": [{ "name": "typescript-plugin-css-modules" }],
+    "baseUrl": "./src",
+    "paths": {
+      "~/*": [
+        "./*"
+      ],
+    },
+    "typeRoots": [
+      "./node_modules/@types",
+      "./src/shared/types"
+    ],
+  },
+  "extends": "./.configs/tsconfig.json",
+  "include": [
+    "eslint.config.js",
+    "src",
+    "./.configs/vite.config.ts"
+  ]
+}

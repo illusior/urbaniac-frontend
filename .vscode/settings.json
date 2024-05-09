@@ -1,0 +1,35 @@
+{
+  "editor.formatOnSave": true,
+  "editor.tabSize": 2,
+  "files.eol": "\n",
+
+  // ESlint
+  "eslint.enable": true,
+  "eslint.format.enable": true,
+  "eslint.experimental.useFlatConfig": true,
+
+  // Stylelint
+  "stylelint.configFile": "./.configs/.stylelintrc.json",
+  "stylelint.packageManager": "pnpm",
+  "stylelint.snippet": [
+    "css"
+  ],
+  "stylelint.validate": [
+    "css"
+  ],
+  "[css]": {
+    "editor.defaultFormatter": "stylelint.vscode-stylelint"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+
+  // Trailing Spaces
+  "trailing-spaces.trimOnSave": true,
+
+  "typescript.tsdk": "node_modules\\typescript\\lib",
+  // TypeScript
+}

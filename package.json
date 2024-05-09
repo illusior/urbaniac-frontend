@@ -1,0 +1,50 @@
+{
+  "name": "geomaniac-frontend",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "build": "tsc && vite build --config ./.configs/vite.config.ts",
+    "dev": "vite --config ./.configs/vite.config.ts",
+    "lintfix": "run-s lintfix:*",
+    "lintfix:eslint": "eslint . --fix --ignore-pattern dist/*",
+    "lintfix:stylelint": "stylelint -c ./.configs/.stylelintrc.json --ignore-path ./.configs/.stylelintignore **/*.css",
+    "lint": "run-s lint:*",
+    "lint:eslint": "eslint . --report-unused-disable-directives --max-warnings 0 --ignore-pattern dist/*",
+    "lint:cspell": "cspell --no-progress --no-summary .",
+    "lint:stylelint": "stylelint -c ./.configs/.stylelintrc.json --ignore-path ./.configs/.stylelintignore **/*.css **/*.scss",
+    "preview": "vite preview --config ./.configs/vite.config.ts"
+  },
+  "dependencies": {
+    "axios": "^1.7.2",
+    "compose-function": "^3.0.3",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "zustand": "^4.5.2"
+  },
+  "devDependencies": {
+    "@eslint/js": "^8.56.0",
+    "@stylistic/eslint-plugin": "^2.1.0",
+    "@types/compose-function": "^0.0.33",
+    "@types/eslint": "^8.56.10",
+    "@types/eslint__js": "^8.42.3",
+    "@types/node": "^20.12.13",
+    "@types/react": "^18.3.1",
+    "@types/react-dom": "^18.2.22",
+    "@typescript-eslint/eslint-plugin": "^7.2.0",
+    "@typescript-eslint/parser": "^7.2.0",
+    "@vitejs/plugin-react-swc": "^3.5.0",
+    "cspell": "^8.8.0",
+    "eslint": "^8.57.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.6",
+    "npm-run-all": "^4.1.5",
+    "stylelint": "^16.5.0",
+    "stylelint-config-recess-order": "^5.0.1",
+    "stylelint-config-standard": "^36.0.0",
+    "typescript": "^5.4.5",
+    "typescript-eslint": "^7.8.0",
+    "typescript-plugin-css-modules": "^5.1.0",
+    "vite": "^5.2.12"
+  }
+}

@@ -1,0 +1,13 @@
+services:
+  frontend:
+    develop:
+      watch:
+        - action: rebuild
+          path: ./../frontend/package.json
+          target: /app/package.json
+        - action: rebuild
+          path: ./../frontend/.configs/
+          target: /app/.configs/
+        - action: sync
+          path: ./../frontend/src/
+          target: /app/src/
