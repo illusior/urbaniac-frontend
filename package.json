@@ -23,7 +23,7 @@
     "zustand": "^4.5.2"
   },
   "devDependencies": {
-    "@eslint/js": "^8.56.0",
+    "@eslint/js": "^9.4.0",
     "@stylistic/eslint-plugin": "^2.1.0",
     "@types/compose-function": "^0.0.33",
     "@types/eslint": "^8.56.10",
