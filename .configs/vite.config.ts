@@ -5,6 +5,7 @@ import {
 } from 'vite';
 import path from 'path';
 import react from '@vitejs/plugin-react-swc';
+import svgr from 'vite-plugin-svgr';
 
 type ViteServer = Exclude<UserConfig['server'], null | undefined>;
 
@@ -36,6 +37,7 @@ export default defineConfig(({ mode }) => {
   return {
     define: { __APP_ENV__: JSON.stringify(env.APP_ENV) },
     plugins: [
+      svgr({ include: '**/*.svg?react' }),
       react(),
     ],
     resolve: {
@@ -43,6 +45,14 @@ export default defineConfig(({ mode }) => {
         {
           find: '~',
           replacement: path.resolve(__dirname, '../src'),
+        },
+        {
+          find: '~assets',
+          replacement: path.resolve(__dirname, '../src/shared/assets'),
+        },
+        {
+          find: '~public',
+          replacement: path.resolve(__dirname, '../public'),
         },
       ],
     },

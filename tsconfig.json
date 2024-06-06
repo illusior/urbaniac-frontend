@@ -2,10 +2,16 @@
   "compilerOptions": {
     "allowJs": true,
     "plugins": [{ "name": "typescript-plugin-css-modules" }],
-    "baseUrl": "./src",
+    "baseUrl": "./",
     "paths": {
       "~/*": [
-        "./*"
+        "./src/*"
+      ],
+      "~assets/*": [
+        "./src/shared/assets/*"
+      ],
+      "~public/*": [
+        "./public/*"
       ],
     },
     "typeRoots": [
