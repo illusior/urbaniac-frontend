@@ -37,3 +37,13 @@ export const routes = (): Route[] => {
       return route.name !== undefined && route.path !== '' && route.name !== '';
     });
 };
+
+export enum AvailableMapNameParamEnum {
+  MARI_EL = 'mari-el',
+  RUSSIA = 'russia',
+  WORLD = 'world',
+}
+
+export const isAvailableMapNameParam = (mapName: string): mapName is AvailableMapNameParamEnum => {
+  return Object.values(AvailableMapNameParamEnum).some((enumValue: string) => enumValue === mapName);
+};
