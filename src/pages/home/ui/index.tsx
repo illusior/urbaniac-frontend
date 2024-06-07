@@ -1,33 +1,32 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
-import Map from '~assets/maps/russia.svg?react';
-// import reactLogo from '~/shared/assets/icons/react.svg';
-// import styles from './styles.module.css';
-// import { useState } from 'react';
-// import { useUserStore } from '~/entities/user';
-// import viteLogo from '/vite.svg';
+import reactLogo from '~/shared/assets/icons/react.svg';
+import styles from './styles.module.css';
+import { useState } from 'react';
+import { useUserStore } from '~/entities/user';
+import viteLogo from '/vite.svg';
 
-interface AppProps {}
+interface HomeProps {}
 
-// function generateRandomString(length: number): string {
-//   let result = '';
-//   const characters = 'abcdefghijklmnopqrstuvwxyz';
-//   const charactersLength = characters.length;
+function generateRandomString(length: number): string {
+  let result = '';
+  const characters = 'abcdefghijklmnopqrstuvwxyz';
+  const charactersLength = characters.length;
 
-//   for (let i = 0; i < length; i++) {
-//     result += characters.charAt(Math.floor(Math.random() * charactersLength));
-//   }
+  for (let i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
 
-//   return result;
-// }
+  return result;
+}
 
-export const App: React.FC<AppProps> = (_: AppProps): JSX.Element => {
-  //   const [count, setCount] = useState(0);
+export const Home: React.FC<HomeProps> = (_: HomeProps): JSX.Element => {
+  const [count, setCount] = useState(0);
 
-  //   const userStore = useUserStore();
+  const userStore = useUserStore();
 
   return (
     <>
-      {/* <div>
+      <div>
         <a href="https://vitejs.dev" target="_blank">
           <img src={viteLogo} className={styles.logo} alt="Vite logo" />
         </a>
@@ -57,20 +56,14 @@ export const App: React.FC<AppProps> = (_: AppProps): JSX.Element => {
         <p>
           Edit
           {' '}
-          <code>src/App.tsx</code>
+          <code>src/Home.tsx</code>
           {' '}
           and save to test HMR
         </p>
       </div>
       <p className={styles['read-the-docs']}>
         Click on the Vite and React logos to learn more
-      </p> */}
-      <div onClick={(e: React.MouseEvent<HTMLDivElement>) => {
-        console.log(e.target);
-      }}
-      >
-        <Map />
-      </div>
+      </p>
     </>
   );
 };
