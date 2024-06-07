@@ -1,5 +1,6 @@
+export type { AvailableMapNameParamEnum } from './config';
 export {
-  AvailableMapNameParamEnum,
+  AvailableMapNameParamEnum as AvailableMapNameParam,
   isAvailableMapNameParam,
   routes,
 } from './config';
