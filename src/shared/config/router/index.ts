@@ -1,4 +1,8 @@
-export { routes } from './config';
+export {
+  AvailableMapNameParamEnum,
+  isAvailableMapNameParam,
+  routes,
+} from './config';
 export {
   getRouteName,
   getRoutePath,

@@ -1,23 +1,21 @@
 import {
-  KeysOfMapPageParams, RouteEnum, getRoutePath,
+  KeysOfMapPageParams,
+  RouteEnum,
+  getRoutePath,
+  isAvailableMapNameParam,
 } from '~/shared/config';
 import {
-  Navigate, useParams,
+  Navigate,
+  useParams,
 } from 'react-router-dom';
 import { TestMapWidget } from '~/widgets/test';
 
 interface MapProps {}
 
-const AVAILABLE_MAPS = [
-  'mari-el',
-  'russia',
-  'world',
-];
-
 export const Map: React.FC<MapProps> = (_: MapProps): JSX.Element => {
   const { mapName = '' } = useParams<KeysOfMapPageParams>();
 
-  const isMapAvailable = AVAILABLE_MAPS.includes(mapName);
+  const isMapAvailable = isAvailableMapNameParam(mapName);
   if (!isMapAvailable) {
     return <Navigate to={getRoutePath(RouteEnum.ERR_404_PAGE)} replace />;
   }
