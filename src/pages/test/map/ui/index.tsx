@@ -21,6 +21,8 @@ export const Map: React.FC<MapProps> = (_: MapProps): JSX.Element => {
   }
 
   return (
-    <TestMapWidget mapName={mapName} />
+    <>
+      <TestMapWidget mapName={mapName} />
+    </>
   );
 };

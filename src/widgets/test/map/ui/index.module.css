@@ -1,0 +1,36 @@
+.map-widget-wrapper {
+  display: flex;
+  flex-flow: column nowrap;
+  max-height: 100%;
+}
+
+.map-wrapper {
+  max-height: 90%;
+}
+
+.map {
+  background-color: transparent;
+}
+
+.map [data-chooseable="true"]:hover {
+  cursor: pointer;
+  fill-opacity: .5 !important;
+  stroke-opacity: .9 !important;
+  stroke-width: 30px !important;
+}
+
+.test-info-wrapper {
+  display: flex;
+  flex: 1;
+  flex-flow: row wrap;
+  align-items: center;
+}
+
+.timer {
+  position: absolute;
+  min-width: 20%;
+}
+
+.test-info {
+  flex: 1;
+}
