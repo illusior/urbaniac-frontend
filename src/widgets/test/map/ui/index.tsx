@@ -8,6 +8,7 @@ import { AvailableMapNameParam } from '~/shared/config';
 import MariElMap from '~assets/maps/russia/mari-el.svg?react';
 import RussiaMap from '~assets/maps/russia/russia.svg?react';
 import WorldMap from '~assets/maps/world.svg?react';
+import clamp from 'clamp';
 import styles from './index.module.css';
 import { useTimer } from 'react-timer-and-stopwatch';
 
@@ -15,23 +16,14 @@ interface TestMapProps {
   mapName: string;
 }
 
-const MAP_NAME_TO_MAP = new Map<string, React.FC<React.SVGProps<SVGSVGElement>>>([
-  // russia
-  [AvailableMapNameParam.RUSSIA, RussiaMap],
-  [AvailableMapNameParam.MARI_EL, MariElMap],
-
-  // world
-  [AvailableMapNameParam.WORLD, WorldMap],
-]);
-
 const UNCHOSEN_FILL_COLOR = 'rgb(242, 242, 242)';
-const TRIES_TO_CHOOSE_CORRECT = 3;
-const MAP_FIND_ATTEMPT_TO_COLOR = new Map<number, string>([
+const FIND_ATTEMPT_TO_COLOR_MAP = new Map<number, string>([
   [0, 'rgb(239, 65, 53)'], // incorrect
   [1, 'rgb(249, 168, 37)'], // more bad
   [2, 'rgb(255, 187, 120)'], // warn
   [3, 'rgb(46, 204, 113)'], // correct
 ]);
+const TRIES_TO_CHOOSE_CORRECT = FIND_ATTEMPT_TO_COLOR_MAP.size - 1;
 
 interface Chooseable {
   codeIso: string;
@@ -86,7 +78,10 @@ const isAvaliableToChoose = (el: SVGSVGElement) => el.hasAttribute(DATA_CHOOSEAB
 const isAlreadyGuessed = (el: SVGSVGElement) => el.style.fill !== UNCHOSEN_FILL_COLOR;
 const isLeftToChoose = (el: SVGSVGElement) => isAvaliableToChoose(el) && !isAlreadyGuessed(el);
 
-const MAP_ISO_CODE_TO_RUSSIA_FEDERATIVE_STATE_NAME = new Map<string, string>([
+type IsoStringT = string;
+type IsoStringToNameMap = Map<IsoStringT, string>;
+
+const MAP_ISO_CODE_TO_RUSSIA_FEDERATIVE_STATE_NAME: IsoStringToNameMap = new Map([
   // 000 sorted by ISO 3166-2 code asc
   ['RU-AD', 'Республика Адыгея'],
   ['RU-AL', 'Республика Алтай'],
@@ -197,14 +192,70 @@ const MAP_ISO_CODE_TO_RUSSIA_FEDERATIVE_STATE_NAME = new Map<string, string>([
   // 089
 ]);
 
-export const TestMap: React.FC<TestMapProps> = ({ mapName }: TestMapProps): JSX.Element => {
-  const MapComponent = MAP_NAME_TO_MAP.get(mapName);
+const MAP_ISO_CODE_TO_RUSSIA_MARI_EL_STATE_NAME: IsoStringToNameMap = new Map([
+  // 000 sorted by ISO 3166-2 code asc
+  ['RU-ME-VZH', 'Волжский район'],
+  ['RU-ME-GRN', 'Горномарийский район'],
+  ['RU-ME-ZVG', 'Звениговский район'],
+  ['RU-ME-KLM', 'Килемарский район'],
+  ['RU-ME-KZH', 'Куженерский район'],
+  // 005
+  ['RU-ME-MT', 'Мари-Турекский район'],
+  ['RU-ME-MD', 'Медведевский район'],
+  ['RU-ME-MK', 'Моркинский район'],
+  ['RU-ME-NVT', 'Новоторъяльский район'],
+  ['RU-ME-ORS', 'Оршанский район'],
+  // 010
+  ['RU-ME-PAR', 'Параньгинский район'],
+  ['RU-ME-SER', 'Сернурский район'],
+  ['RU-ME-SVT', 'Советский район'],
+  ['RU-ME-YUR', 'Юринский район'],
+  ['RU-ME-YOS', 'Йошкар-Ола'],
+  // 015
+  ['RU-ME-VSK', 'Волжск'],
+  ['RU-ME-KZM', 'Козьмодемьянск'],
+  // 017
+]);
 
-  if (!MapComponent) {
+type TestMapHtmlElement = React.SVGProps<SVGSVGElement>;
+type TestMapReactElement = React.FC<TestMapHtmlElement>;
+
+interface TestMap {
+  mapComponent: TestMapReactElement;
+  isoCodesToString: IsoStringToNameMap;
+}
+
+const MAP_NAME_TO_MAP = new Map<AvailableMapNameParam, TestMap>([
+  // russia
+  [AvailableMapNameParam.RUSSIA, {
+    isoCodesToString: MAP_ISO_CODE_TO_RUSSIA_FEDERATIVE_STATE_NAME,
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    mapComponent: RussiaMap,
+  }],
+  [AvailableMapNameParam.MARI_EL, {
+    isoCodesToString: MAP_ISO_CODE_TO_RUSSIA_MARI_EL_STATE_NAME,
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    mapComponent: MariElMap,
+  }],
+
+  // world
+  [AvailableMapNameParam.WORLD, {
+    isoCodesToString: MAP_ISO_CODE_TO_RUSSIA_MARI_EL_STATE_NAME,
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    mapComponent: WorldMap,
+  }],
+]);
+
+export const TestMap: React.FC<TestMapProps> = ({ mapName }: TestMapProps): JSX.Element => {
+  const MapInfo = MAP_NAME_TO_MAP.get(mapName as AvailableMapNameParam);
+
+  if (!MapInfo) {
     return <></>;
   }
 
-  const [leftToGuess, setLeftToGuess] = useState<number>(MAP_ISO_CODE_TO_RUSSIA_FEDERATIVE_STATE_NAME.size);
+  const MapComponent = MapInfo.mapComponent;
+  const isoCodesToString = MapInfo.isoCodesToString;
+
   const mapContainerRef = useRef<HTMLDivElement>(null);
 
   const getMap = () => {
@@ -214,6 +265,10 @@ export const TestMap: React.FC<TestMapProps> = ({ mapName }: TestMapProps): JSX.
     }
     return mapContainer.querySelector<SVGSVGElement>('#map');
   };
+
+  const [leftToGuess, setLeftToGuess] = useState<number>(isoCodesToString.size);
+  const [scorePercentage, setScorePercentage] = useState<number>(0);
+  const scorePercentageStep = 100 / isoCodesToString.size;
 
   const countLeftToGuess = () => {
     const map = getMap();
@@ -259,7 +314,8 @@ export const TestMap: React.FC<TestMapProps> = ({ mapName }: TestMapProps): JSX.
         ref={mapContainerRef}
       >
         <MapComponent
-          onClick={(e: React.MouseEvent<SVGSVGElement>) => {
+          // eslint-disable-next-line @typescript-eslint/no-misused-promises
+          onClick={async (e: React.MouseEvent<SVGSVGElement>) => {
             const chosenSvg = e.target as SVGSVGElement;
             const isNeedToColor = isAvaliableToChoose(chosenSvg) && !isAlreadyGuessed(chosenSvg);
             if (!isNeedToColor) {
@@ -267,20 +323,30 @@ export const TestMap: React.FC<TestMapProps> = ({ mapName }: TestMapProps): JSX.
             }
 
             const isCorrectChoose = chosenSvg.dataset.codeIso === toFind?.codeIso;
-            const hasFindAttempts = findAttempt !== 0;
+            const hasFindAttempts = findAttempt >= 0;
             const mustColorErrorOrCorrectChoose = isCorrectChoose || !hasFindAttempts;
             if (!mustColorErrorOrCorrectChoose) {
-              setFindAttempt(curr => (curr > 0) ? curr - 1 : 0);
+              setFindAttempt(curr => curr - 1);
+              await new Audio('/sounds/mouse-click-negative.wav').play();
               return;
+            }
+
+            if (hasFindAttempts) {
+              await new Audio('/sounds/mouse-click.wav').play();
+            }
+            else {
+              await new Audio('/sounds/error.wav').play();
             }
 
             const toColorSvg = (hasFindAttempts)
               ? chosenSvg
               : collectNestedBy(getMap()!, el => isLeftToChoose(el) && el.dataset.codeIso === toFind?.codeIso)[0];
-
-            const fillColor = MAP_FIND_ATTEMPT_TO_COLOR.get(findAttempt) ?? '';
+            const fillColor = FIND_ATTEMPT_TO_COLOR_MAP.get(clamp(findAttempt, 0, TRIES_TO_CHOOSE_CORRECT)) ?? '';
             toColorSvg.style.fill = fillColor;
 
+            if (hasFindAttempts) {
+              setScorePercentage(curr => curr + 1 / (TRIES_TO_CHOOSE_CORRECT - findAttempt + 1) * scorePercentageStep);
+            }
             setFindAttempt(TRIES_TO_CHOOSE_CORRECT);
 
             countLeftToGuess();
@@ -293,9 +359,21 @@ export const TestMap: React.FC<TestMapProps> = ({ mapName }: TestMapProps): JSX.
           {timer.timerText}
         </div>
         <div className={styles['test-info']}>
-          Найди на карте:
+          {
+            (toFind) && (
+              <>
+                Найди на карте:
+                {' '}
+                {isoCodesToString.get(toFind.codeIso)}
+              </>
+            )
+          }
+        </div>
+        <div className={styles['succeed-percentage']}>
+          Процент знания:
           {' '}
-          {MAP_ISO_CODE_TO_RUSSIA_FEDERATIVE_STATE_NAME.get(toFind?.codeIso ?? '')}
+          {scorePercentage.toFixed(2)}
+          %
         </div>
       </div>
     </div>

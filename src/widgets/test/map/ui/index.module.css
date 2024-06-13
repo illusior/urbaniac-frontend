@@ -15,8 +15,9 @@
 .map [data-chooseable="true"]:hover {
   cursor: pointer;
   fill-opacity: .5 !important;
+  stroke: darkorange;
   stroke-opacity: .9 !important;
-  stroke-width: 30px !important;
+  stroke-width: 15px !important;
 }
 
 .test-info-wrapper {
@@ -28,9 +29,14 @@
 
 .timer {
   position: absolute;
-  min-width: 20%;
+  left: 10%;
 }
 
 .test-info {
   flex: 1;
+}
+
+.succeed-percentage {
+  position: absolute;
+  right: 10%;
 }
