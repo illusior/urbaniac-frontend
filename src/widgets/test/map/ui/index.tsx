@@ -229,19 +229,16 @@ const MAP_NAME_TO_MAP = new Map<AvailableMapNameParam, TestMap>([
   // russia
   [AvailableMapNameParam.RUSSIA, {
     isoCodesToString: MAP_ISO_CODE_TO_RUSSIA_FEDERATIVE_STATE_NAME,
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     mapComponent: RussiaMap,
   }],
   [AvailableMapNameParam.MARI_EL, {
     isoCodesToString: MAP_ISO_CODE_TO_RUSSIA_MARI_EL_STATE_NAME,
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     mapComponent: MariElMap,
   }],
 
   // world
   [AvailableMapNameParam.WORLD, {
     isoCodesToString: MAP_ISO_CODE_TO_RUSSIA_MARI_EL_STATE_NAME,
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     mapComponent: WorldMap,
   }],
 ]);
