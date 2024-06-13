@@ -7,3 +7,5 @@ services:
       - ./.dev.env
     environment:
       NODE_ENV: development
+    ports:
+      - ${FRONTEND_HOST_PORT:-8080}:${VITE_PORT:-8080}

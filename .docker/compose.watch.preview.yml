@@ -2,6 +2,7 @@ services:
   frontend:
     develop:
       watch:
+        # for stack container (docker compose up from project's root directory)
         - action: rebuild
           path: ./../frontend/package.json
           target: /app/package.json
@@ -10,4 +11,15 @@ services:
           target: /app/.configs/
         - action: rebuild
           path: ./../frontend/src/
+          target: /app/src/
+
+        # for only frontend container (docker compose up from frontend's root directory)
+        - action: rebuild
+          path: ./package.json
+          target: /app/package.json
+        - action: rebuild
+          path: ./.configs/
+          target: /app/.configs/
+        - action: rebuild
+          path: ./src/
           target: /app/src/
