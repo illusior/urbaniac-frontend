@@ -7,7 +7,10 @@
     "**/node_modules",
     "**/package.json",
     "**/pnpm-lock.yaml",
-    "**/*.svg"
+    "**/choose-test/*",
+    "**/map/*",
+    "**/*.svg",
+    "**/*.wav"
   ],
   "dictionaryDefinitions": [
     {

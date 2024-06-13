@@ -18,12 +18,12 @@ if ! contains_element $buildType ${buildTypeAllowed[@]} ; then
 fi
 
 composeArgs=()
-if [ "$buildType" == "$buildDevType" ]; then
+if [ $buildType == $buildDevType ]; then
   composeArgs+=( "-f ./.docker/compose.override.yml" )
 fi
 
-if [ "$buildType" == "$buildPreviewType" ]; then
-  composeArgs+=( "-f ./.docker/compose.watch.preview.yml" )
+if [ $buildType == $buildDevType ] || [ $buildType == $buildPreviewType ]; then
+  composeArgs+=( "-f ./.docker/compose.watch.$buildType.yml" )
 fi
 
 finalComand="docker compose \

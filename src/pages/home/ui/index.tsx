@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { useUserStore } from '~/entities/user';
 import viteLogo from '/vite.svg';
 
-interface AppProps {}
+interface HomeProps {}
 
 function generateRandomString(length: number): string {
   let result = '';
@@ -19,7 +19,7 @@ function generateRandomString(length: number): string {
   return result;
 }
 
-export const App: React.FC<AppProps> = (_: AppProps): JSX.Element => {
+export const Home: React.FC<HomeProps> = (_: HomeProps): JSX.Element => {
   const [count, setCount] = useState(0);
 
   const userStore = useUserStore();
@@ -56,7 +56,7 @@ export const App: React.FC<AppProps> = (_: AppProps): JSX.Element => {
         <p>
           Edit
           {' '}
-          <code>src/App.tsx</code>
+          <code>src/Home.tsx</code>
           {' '}
           and save to test HMR
         </p>
