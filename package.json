@@ -24,7 +24,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^8.56.0",
-    "@stylistic/eslint-plugin": "^2.1.0",
+    "@stylistic/eslint-plugin": "^2.2.2",
     "@types/compose-function": "^0.0.33",
     "@types/eslint": "^8.56.10",
     "@types/eslint__js": "^8.42.3",
